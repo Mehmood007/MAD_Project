@@ -2,12 +2,10 @@
 import React from 'react';
 // import all the components we are going to use
 import {
-  SafeAreaView,
   Text,
   TextInput,
   View,
   StyleSheet,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 
