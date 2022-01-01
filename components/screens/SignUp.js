@@ -4,37 +4,28 @@ import {
   TextInput,
   View,
   StyleSheet,
-  Image,
   TouchableOpacity
 } from 'react-native';
 
-//import Card
-import { Card } from 'react-native-paper';
 
 
 
 const Signup = () => {
   return (
-    <View style={styles.container}>
-    <Card style={{ borderRadius:100,justifyContent:'center',alignItems:'center'}}>
-      <Image source={require('./assets/Login/Best-souk.jpg')}
-      style={{ width: 170, height: 170 }} />
-        </Card>
-        <Card style={{ borderRadius:20,marginTop:30}}>
-          <Text style={styles.paragraph}> Register In Best Souck</Text>
+    <View style={{backgroundColor:'lightblue'}}>
+        <View style={{ borderRadius:20,marginTop:30}}>
+          <Text style={styles.paragraph}>Sign UP</Text>
           <TextInput style={styles.texInput} placeholder='Enter Email' placeholderTextColor="black"/>
           <TextInput style={styles.texInput2}  placeholder='Enter Name' placeholderTextColor="black"/>
-          <TextInput style={styles.texInput2}  placeholder='Enter Password' placeholderTextColor="black"/>
-          <TextInput style={styles.texInput2}  placeholder='Enter  Confirm Password' placeholderTextColor="black"/>
-          <TextInput style={styles.texInput2}  placeholder='Enter Gender' placeholderTextColor="black"/>
-        </Card>
+          <TextInput style={styles.texInput2}  placeholder='Enter Password' placeholderTextColor="black" secureTextEntry = {true}/>
+          <TextInput style={styles.texInput2}  placeholder='Enter  Confirm Password' placeholderTextColor="black" secureTextEntry = {true}/>
+        </View>
         <TouchableOpacity style={styles.button}>
             <Text style = {{color:'black',fontWeight:'bold', fontSize: 18}}>Sign Up </Text>
         </TouchableOpacity>
           
-        <TouchableOpacity>
-             
-             <Text style = {{color:'white',fontWeight:'bold', fontSize: 18,textAlign:'center'}}>Already Registered </Text>
+        <TouchableOpacity style={styles.button}>
+             <Text style = {{color:'black',fontWeight:'bold', fontSize: 18,textAlign:'center'}}>Already Registered </Text>
         </TouchableOpacity>
 
     </View>
