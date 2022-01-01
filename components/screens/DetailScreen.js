@@ -14,13 +14,21 @@ import COLORS from '../consts/colors';
 import Milk from '../../assets/milk.png';
 import Eggs from '../../assets/eggs.png';
 
-function ProductDetails( { route,navigation }) {
-  
+function ProductDetails(props) {
 
- 
+
+
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white }}>
-      
+      <View style={style.header}>
+        <Icon
+          name="arrow-back-ios"
+          size={28}
+          onPress={() => props.navigation.goBack()}
+        />
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Details</Text>
+      </View>
+
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
@@ -41,7 +49,7 @@ function ProductDetails( { route,navigation }) {
             }}>
             <Text
               style={{ fontSize: 25, fontWeight: 'bold', color: COLORS.white }}>
-             Milk
+              {props.title}
             </Text>
           </View>
 
@@ -51,7 +59,7 @@ function ProductDetails( { route,navigation }) {
             ever since the 1500s, when an unknown printer took a galley.
           </Text>
           <View style={{ marginTop: 40, marginBottom: 40 }}>
-            <TouchableOpacity  activeOpacity={0.8} >
+            <TouchableOpacity activeOpacity={0.8} >
               <View
                 style={{
                   ...style.btnContainer,
@@ -69,10 +77,11 @@ function ProductDetails( { route,navigation }) {
   );
 }
 
-function DetailsScreen({ navigation }) {
+function DetailsScreen({ navigation, route }) {
+  const title = route.params.title;
   return (
     <View>
-      <ProductDetails />
+      <ProductDetails title={title} navigation={navigation} />
     </View>
   );
 }
@@ -91,7 +100,7 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.primary,
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
-    
+
   },
 
   detailsText: {

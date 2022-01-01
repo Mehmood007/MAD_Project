@@ -63,7 +63,7 @@ const MyProducts = (prop, { navigation }) => {
 
           <View style={{ marginHorizontal: 20, alignItems: 'center' }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-              {prop.tittle}
+              {prop.title}
             </Text>
             <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}>
               {prop.ingredients}
@@ -81,9 +81,9 @@ const MyProducts = (prop, { navigation }) => {
               {prop.quantity}
             </Text>
             <TouchableOpacity>
-                <View style={style.addToCartBtn}>
+              <View style={style.addToCartBtn}>
                 <Icon name="add" size={20} color={COLORS.white} />
-                </View>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -100,27 +100,37 @@ function HomeScreen({ navigation }) {
         <View style={{ flexDirection: 'row' }}>
           <MyProducts
             product={Milk}
-            tittle="Milk"
+            title="Milk"
             ingredients="Cow Milk"
             quantity="1kg"
+            click={() => {
+              navigation.navigate("DetailScreen", {
+                title: "Milk"
+              })
+            }}
           />
           <MyProducts
             product={Eggs}
-            tittle="Eggs"
+            title="Eggs"
             ingredients="Desi Eggs"
             quantity="1Dozen"
+            click={() => {
+              navigation.navigate("DetailScreen", {
+                title: "Eggs"
+              })
+            }}
           />
         </View>
         <View style={{ flexDirection: 'row' }}>
           <MyProducts
             product={Eggs}
-            tittle="Fruit"
+            title="Fruit"
             ingredients="Fresh Fruits"
             quantity="1kg"
           />
           <MyProducts
             product={Milk}
-            tittle="Vegetables"
+            title="Vegetables"
             ingredients="Fesh Vegs"
             quantity="1Kg"
           />
