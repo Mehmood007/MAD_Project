@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 
-const LoginApp = ({ navigation }) => {
+const LoginApp = ({ navigation }, props) => {
   const API_KEY = "https://mad-project-207eb-default-rtdb.firebaseio.com/"
   return (
     <View>
@@ -35,28 +35,30 @@ const LoginApp = ({ navigation }) => {
       </View>
 
       <TouchableOpacity
-        onPress={async () => {
-          const response = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBddMtRAIPNUXsRna7iJNAbp685vHkNx5Q", {
-            email: "mehmood@gmail.com",
-            password: "qwerty123",
-            returnSecureToken: true
-          })
-          const parsedData = response.data
+        onPress={props.fun
+        //   async () => {
+        //   const response = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBddMtRAIPNUXsRna7iJNAbp685vHkNx5Q", {
+        //     email: "mehmood@gmail.com",
+        //     password: "qwerty123",
+        //     returnSecureToken: true
+        //   })
+        //   const parsedData = response.data
 
-          // console.log(parsedData)
-          const localId = parsedData.localId
-          console.log(localId)
+        //   console.log(parsedData)
+        //   const localId = parsedData.localId
+        //   console.log(localId)
 
-          await axios.post(`${API_KEY}users/${localId}`, {
-            name: "Mehmood Shah G",
-            // number: "090078601",
-            // email: 'mehmood@gmail.com',
-          })
+        //   await axios.post(`${API_KEY}users/${localId}`, {
+        //     name: "Mehmood Shah G",
+        //     number: "090078601",
+        //     email: 'mehmood@gmail.com',
+        //   })
 
-          // console.log(response)
-          // navigation.navigate("RootDrawer")
-          // console.log("OK")
-        }}
+        //   console.log(response)
+        //   navigation.navigate("RootDrawer")
+        //   console.log("OK")
+        // }
+      }
         style={styles.button}>
         <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 18 }}>
           {' '}
