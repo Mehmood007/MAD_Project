@@ -11,7 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../consts/colors';
 import Milk from '../../assets/milk.png';
-import Eggs from '../../assets/eggs.png';
+import HeadPhone from '../../assets/HeadPhones.png';
 
 function Header() {
   return (
@@ -110,20 +110,20 @@ function HomeScreen({ navigation }) {
             }}
           />
           <MyProducts
-            product={Eggs}
-            title="Eggs"
-            ingredients="Desi Eggs"
-            quantity="1Dozen"
+            product={HeadPhone}
+            title="HeadPhones"
+            ingredients="Branded HeadPhones"
+            quantity="1"
             click={() => {
               navigation.navigate("DetailScreen", {
-                title: "Eggs"
+                title: "HeadPhones"
               })
             }}
           />
         </View>
         <View style={{ flexDirection: 'row' }}>
           <MyProducts
-            product={Eggs}
+            product={HeadPhone}
             title="Fruit"
             ingredients="Fresh Fruits"
             quantity="1kg"
