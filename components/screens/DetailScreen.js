@@ -11,8 +11,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../consts/colors';
-import Milk from '../../assets/milk.png';
-import Eggs from '../../assets/eggs.png';
+import Shirt from '../../assets/shirt.png';
 
 function ProductDetails(props) {
 
@@ -37,7 +36,7 @@ function ProductDetails(props) {
             alignItems: 'center',
             height: 280,
           }}>
-          <Image source={Milk} style={{ height: 220, width: 220 }} />
+          <Image source={Shirt} style={{ height: 220, width: 220 }} />
         </View>
 
         <View style={style.details}>
@@ -51,12 +50,14 @@ function ProductDetails(props) {
               style={{ fontSize: 25, fontWeight: 'bold', color: COLORS.white }}>
               {props.title}
             </Text>
+             <Text
+              style={{ fontSize: 25, fontWeight: 'bold', color: COLORS.white }}>
+              $ {props.price}
+            </Text>
           </View>
 
           <Text style={style.detailsText}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley.
+            {props.description}
           </Text>
           <View style={{ marginTop: 40, marginBottom: 40 }}>
             <TouchableOpacity activeOpacity={0.8} >
@@ -79,9 +80,11 @@ function ProductDetails(props) {
 
 function DetailsScreen({ navigation, route }) {
   const title = route.params.title;
+  const description = route.params.description
+  const price = route.params.price
   return (
     <View>
-      <ProductDetails title={title} navigation={navigation} />
+      <ProductDetails title={title} description={description} price={price} navigation={navigation} />
     </View>
   );
 }

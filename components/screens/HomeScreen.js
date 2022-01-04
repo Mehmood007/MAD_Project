@@ -10,11 +10,12 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../consts/colors';
-import Milk from '../../assets/milk.png';
+import Shirt from '../../assets/shirt.png';
 import HeadPhone from '../../assets/HeadPhones.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { API_KEY } from '../../env';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
 function Header(props) {
   return (
@@ -22,8 +23,8 @@ function Header(props) {
       <View style={style.header}>
         <View>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={{ fontSize: 24 }}>Hello,</Text>
-            <Text style={{ fontSize: 24, fontWeight: 'bold', marginLeft: 10 }}>
+            <Text style={{ fontSize: 24, color: COLORS.light }}>Hello,</Text>
+            <Text style={{ fontSize: 24, fontWeight: 'bold', marginLeft: 10, color: COLORS.light }}>
               {props.name}
             </Text>
           </View>
@@ -65,9 +66,7 @@ const MyProducts = (prop, { navigation }) => {
             <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
               {prop.title}
             </Text>
-            <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}>
-              {prop.ingredients}
-            </Text>
+
           </View>
 
           <View
@@ -78,11 +77,11 @@ const MyProducts = (prop, { navigation }) => {
               justifyContent: 'space-between',
             }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 50 }}>
-              {prop.quantity}
+              $ {prop.price}
             </Text>
             <TouchableOpacity>
               <View style={style.addToCartBtn}>
-                <Icon name="add" size={20} color={COLORS.white} />
+                <Icon name="add-shopping-cart" size={20} color={COLORS.white} />
               </View>
             </TouchableOpacity>
           </View>
@@ -94,6 +93,7 @@ const MyProducts = (prop, { navigation }) => {
 
 function HomeScreen({ navigation }) {
   const [name, setName] = React.useState()
+  const [products, setProducts] = React.useState([])
 
   useEffect(async () => {
     const data = await AsyncStorage.getItem('userData')
@@ -125,50 +125,36 @@ function HomeScreen({ navigation }) {
       setName(parsedData.name)
     }
 
+    //get Products
+    const productData = await axios.get(`${API_KEY}products.json`)
+    console.log(productData.data);
+    const dummyArr = []
+    for (var key in productData.data) {
+      const item = productData.data[key]
+      dummyArr.push(item)
+    }
+
+    setProducts(dummyArr)
+
   }, [])
   return (
     <View style={style.container}>
       <Header name={name} />
-      <View style={{ paddingHorizontal: 10 }}>
-        <View style={{ flexDirection: 'row' }}>
-          <MyProducts
-            product={Milk}
-            title="Milk"
-            ingredients="Cow Milk"
-            quantity="1kg"
-            click={() => {
-              navigation.navigate("DetailScreen", {
-                title: "Milk"
-              })
-            }}
-          />
-          <MyProducts
-            product={HeadPhone}
-            title="HeadPhones"
-            ingredients="Branded HeadPhones"
-            quantity="1"
-            click={() => {
-              navigation.navigate("DetailScreen", {
-                title: "HeadPhones"
-              })
-            }}
-          />
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <MyProducts
-            product={HeadPhone}
-            title="Fruit"
-            ingredients="Fresh Fruits"
-            quantity="1kg"
-          />
-          <MyProducts
-            product={Milk}
-            title="Vegetables"
-            ingredients="Fesh Vegs"
-            quantity="1Kg"
-          />
-        </View>
-      </View>
+      <FlatList data={products} renderItem={(itemData) => {
+        return <MyProducts
+          product={HeadPhone}
+          title={itemData.item.name}
+          description={itemData.item.description}
+          price={itemData.item.price}
+          click={() => {
+            navigation.navigate("DetailScreen", {
+              title: itemData.item.name,
+              description: itemData.item.description,
+              price: itemData.item.price
+            })
+          }}
+        />
+      }} />
     </View>
   );
 }
@@ -205,7 +191,7 @@ const style = StyleSheet.create({
   },
   card: {
     height: 150,
-    width: 160,
+    width: "95%",
     marginHorizontal: 10,
     marginBottom: 20,
     marginTop: 90,

@@ -4,16 +4,16 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../consts/colors';
-import Milk from '../../assets/milk.png';
-import Eggs from '../../assets/eggs.png';
+import HeadPhone from '../../assets/HeadPhones.png';
 
 function CartCard() {
   return (<View style={style.cartCard}>
-        <Image source={Milk} style={{height: 80, width: 80}} />
+        <Image source={HeadPhone} style={{height: 80, width: 80}} />
         <View
           style={{
             height: 100,
@@ -30,8 +30,7 @@ function CartCard() {
         <View style={{marginRight: 20, alignItems: 'center'}}>
           <Text style={{fontWeight: 'bold', fontSize: 18}}>3</Text>
           <View style={style.actionBtn}>
-            <Icon name="remove" size={25} color={COLORS.white} />
-            <Icon name="add" size={25} color={COLORS.white} />
+          <TouchableOpacity><Icon name="delete" size={25} color={COLORS.white} /></TouchableOpacity>
           </View>
         </View>
       </View>
