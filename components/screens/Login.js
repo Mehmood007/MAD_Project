@@ -1,6 +1,6 @@
 // import React in our code
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 // import all the components we are going to use
 import {
   Text,
@@ -9,10 +9,18 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const LoginApp = ({ navigation }, props) => {
-  const API_KEY = "https://mad-project-207eb-default-rtdb.firebaseio.com/"
+  const [email, setemail] = React.useState();
+  const [password, setPassword] = React.useState();
+  useEffect(async () => {
+    const data = await AsyncStorage.getItem('userData')
+    if (data) {
+      navigation.replace('RootDrawer')
+    }
+  }, [])
   return (
     <View>
 
@@ -22,6 +30,10 @@ const LoginApp = ({ navigation }, props) => {
           style={styles.texInput2}
           placeholder="Enter Email"
           placeholderTextColor="black"
+          value={email}
+          onChangeText={(value) => {
+            setemail(value)
+          }}
         />
 
         <TextInput
@@ -29,6 +41,10 @@ const LoginApp = ({ navigation }, props) => {
           placeholder="Enter Password"
           placeholderTextColor="black"
           secureTextEntry={true}
+          value={password}
+          onChangeText={(value) => {
+            setPassword(value)
+          }}
         />
 
 
@@ -37,34 +53,36 @@ const LoginApp = ({ navigation }, props) => {
       <TouchableOpacity
         onPress={
           async () => {
-          const response = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBddMtRAIPNUXsRna7iJNAbp685vHkNx5Q", {
-            email: "user@test.com",
-            password: "123123",
-            returnSecureToken: true
-          })
-          const parsedData = response.data()
+            const response = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBddMtRAIPNUXsRna7iJNAbp685vHkNx5Q", {
+              email: email,
+              password: password,
+              returnSecureToken: true
+            })
+            const parsedData = response.data
+            const localId = parsedData.localId
 
-          console.log(parsedData)
-          const localId = parsedData.localId
-          console.log(localId)
+            await AsyncStorage.setItem('userData', JSON.stringify({
+              'localId': localId,
+              'email': email
+            }))
 
-          await axios.post(`${API_KEY}users/${localId}`, {
-            name: "Mehmood Shah G",
-            number: "090078601",
-            email: 'mehmood@gmail.com',
-          })
-
-          console.log(response)
-          navigation.navigate("RootDrawer")
-          console.log("OK")
+            navigation.replace("RootDrawer")
+          }
         }
-      }
         style={styles.button}>
         <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 18 }}>
           {' '}
           LOG IN{' '}
         </Text>
       </TouchableOpacity>
+      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        <Text>Not a Member?</Text>
+        <TouchableOpacity onPress={() => {
+          navigation.replace("SignupScreen")
+        }}>
+          <Text style={{ color: 'blue', borderWidth: 1, borderBottomColor: 'blue' }}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
     </View >
   );
 };

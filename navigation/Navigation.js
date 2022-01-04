@@ -7,6 +7,8 @@ import LoginApp from "../components/screens/Login";
 import CartScreen from '../components/screens/CartScreen'
 import Signup from "../components/screens/SignUp";
 import DetailsScreen from "../components/screens/DetailScreen";
+import { Pressable, Text } from 'react-native'
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Drawer = createDrawerNavigator();
 const ProductsStack = createNativeStackNavigator()
@@ -22,7 +24,18 @@ const ProductStackNavigator = () => {
 function MyDrawer() {
     return (
         <Drawer.Navigator>
-            <Drawer.Screen name="ProductScreen" component={ProductStackNavigator}  />
+            <Drawer.Screen name="ProductScreen" component={ProductStackNavigator} options={({ navigation }) => {
+                return {
+                    headerRight: () => {
+                        return <Pressable onPress={async () => {
+                            await AsyncStorage.removeItem('userData')
+                            navigation.replace("LoginScreen")
+                        }}>
+                            <Text>LogOut</Text>
+                        </Pressable>
+                    }
+                }
+            }} />
             <Drawer.Screen name="CartScreen" component={CartScreen} />
         </Drawer.Navigator>
     );

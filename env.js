@@ -1,0 +1,1 @@
+export const API_KEY = "https://mad-project-207eb-default-rtdb.firebaseio.com/"

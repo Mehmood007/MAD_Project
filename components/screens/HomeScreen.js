@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Image,
   StyleSheet,
@@ -12,16 +12,19 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../consts/colors';
 import Milk from '../../assets/milk.png';
 import HeadPhone from '../../assets/HeadPhones.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { API_KEY } from '../../env';
 
-function Header() {
+function Header(props) {
   return (
-    <View style={{ backgroundColor: COLORS.white }}>
+    <View style={{ backgroundColor: COLORS.dark }}>
       <View style={style.header}>
         <View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={{ fontSize: 24 }}>Hello,</Text>
             <Text style={{ fontSize: 24, fontWeight: 'bold', marginLeft: 10 }}>
-              Mehmood
+              {props.name}
             </Text>
           </View>
           <Text style={{ marginTop: 5, fontSize: 22, color: COLORS.grey }}>
@@ -41,9 +44,6 @@ function Header() {
             style={{ flex: 1, fontSize: 18 }}
             placeholder="Search for food"
           />
-        </View>
-        <View style={style.sortBtn}>
-          <Icon name="tune" size={28} color={COLORS.white} />
         </View>
       </View>
     </View>
@@ -93,9 +93,42 @@ const MyProducts = (prop, { navigation }) => {
 };
 
 function HomeScreen({ navigation }) {
+  const [name, setName] = React.useState()
+
+  useEffect(async () => {
+    const data = await AsyncStorage.getItem('userData')
+    const parsedData = JSON.parse(data)
+    const localId = parsedData.localId
+    // console.log(parsedData)
+    if (parsedData.name == null) {
+      const response = await axios.get(`${API_KEY}users/${localId}.json`);
+      // console.log(response.data)
+      for (var key in response.data) {
+        const name = response.data[key].name
+        setName(name)
+        await AsyncStorage.setItem('userData', JSON.stringify({
+          name: name,
+          email: parsedData.email,
+          localId: localId
+        }))
+      }
+
+      const data1 = await AsyncStorage.getItem('userData')
+      console.log(data1);
+
+
+
+    }
+    else {
+      const data = await AsyncStorage.getItem('userData')
+      const parsedData = JSON.parse(data)
+      setName(parsedData.name)
+    }
+
+  }, [])
   return (
     <View style={style.container}>
-      <Header />
+      <Header name={name} />
       <View style={{ paddingHorizontal: 10 }}>
         <View style={{ flexDirection: 'row' }}>
           <MyProducts
