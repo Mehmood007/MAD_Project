@@ -12,6 +12,9 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../consts/colors';
 import Shirt from '../../assets/shirt.png';
+import { useSelector, useDispatch } from 'react-redux'
+import { addItem } from '../../store/actions/cartActions'
+
 
 function ProductDetails(props) {
 
@@ -50,7 +53,7 @@ function ProductDetails(props) {
               style={{ fontSize: 25, fontWeight: 'bold', color: COLORS.white }}>
               {props.title}
             </Text>
-             <Text
+            <Text
               style={{ fontSize: 25, fontWeight: 'bold', color: COLORS.white }}>
               $ {props.price}
             </Text>
@@ -60,7 +63,7 @@ function ProductDetails(props) {
             {props.description}
           </Text>
           <View style={{ marginTop: 40, marginBottom: 40 }}>
-            <TouchableOpacity activeOpacity={0.8} >
+            <TouchableOpacity activeOpacity={0.8} onPress={props.addToCart.bind(this, { id: props.id, title: props.title, price: props.price, quantity: 1})} >
               <View
                 style={{
                   ...style.btnContainer,
@@ -82,9 +85,16 @@ function DetailsScreen({ navigation, route }) {
   const title = route.params.title;
   const description = route.params.description
   const price = route.params.price
+  const productid = route.params.id;
+
+  const dispatch = useDispatch()
+
+  const addToCart = (item) => {
+    dispatch(addItem(item))
+  }
   return (
     <View>
-      <ProductDetails title={title} description={description} price={price} navigation={navigation} />
+      <ProductDetails title={title} description={description} price={price} navigation={navigation} id={productid} addToCart={addToCart} />
     </View>
   );
 }

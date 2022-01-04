@@ -150,7 +150,8 @@ function HomeScreen({ navigation }) {
             navigation.navigate("DetailScreen", {
               title: itemData.item.name,
               description: itemData.item.description,
-              price: itemData.item.price
+              price: itemData.item.price,
+              id: itemData.item.id
             })
           }}
         />

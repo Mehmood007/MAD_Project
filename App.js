@@ -9,25 +9,20 @@ import Signup from './components/screens/SignUp';
 import Login from './components/screens/Login';
 import HomeScreen from './components/screens/HomeScreen';
 import RootStackNavigator from './navigation/Navigation.js';
+import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+import CartReducer from './store/reducer/cartReducer'
 
 export default function App() {
-  // const [currentScreen, setCurrentScreen] = React.useState('login');
-  // if (currentScreen=="login"){
-  //   return (
-  //     <View style={styles.container}>
-  //       <Login></Login>
-  //     </View>
-  //   );
-  // }else if(currentScreen=="Sign UP"){
-  //   return (
-  //     <View style={styles.container}>
-  //       <Signup></Signup>
-  //     </View>
-  //   );
-  // }else{
-  //   <HomeScreen></HomeScreen>
-  // }
-  return <RootStackNavigator />
+  const rootReducer = combineReducers({
+    'cart': CartReducer
+  })
+
+  const store = createStore(rootReducer)
+
+  return <Provider store={store}>
+    <RootStackNavigator />
+  </Provider>
 }
 
 const styles = StyleSheet.create({
