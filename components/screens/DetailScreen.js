@@ -11,7 +11,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../consts/colors';
-import Shirt from '../../assets/shirt.png';
+import HeadPhone from '../../assets/HeadPhones.png';
 import { useSelector, useDispatch } from 'react-redux'
 import { addItem } from '../../store/actions/cartActions'
 
@@ -39,7 +39,7 @@ function ProductDetails(props) {
             alignItems: 'center',
             height: 280,
           }}>
-          <Image source={Shirt} style={{ height: 220, width: 220 }} />
+          <Image source={HeadPhone} style={{ height: 220, width: 220 }} />
         </View>
 
         <View style={style.details}>

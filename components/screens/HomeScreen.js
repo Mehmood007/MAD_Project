@@ -16,6 +16,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { API_KEY } from '../../env';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux'
+import { addItem } from '../../store/actions/cartActions'
 
 function Header(props) {
   return (
@@ -79,7 +81,9 @@ const MyProducts = (prop, { navigation }) => {
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 50 }}>
               $ {prop.price}
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+              prop.addToCart.bind(this, { id: prop.id, title: prop.title, price: prop.price, quantity: 1 })
+            }}>
               <View style={style.addToCartBtn}>
                 <Icon name="add-shopping-cart" size={20} color={COLORS.white} />
               </View>
@@ -94,6 +98,11 @@ const MyProducts = (prop, { navigation }) => {
 function HomeScreen({ navigation }) {
   const [name, setName] = React.useState()
   const [products, setProducts] = React.useState([])
+  const dispatch = useDispatch()
+
+  const addToCart = (item) => {
+    dispatch(addItem(item))
+  }
 
   useEffect(async () => {
     const data = await AsyncStorage.getItem('userData')
@@ -142,6 +151,8 @@ function HomeScreen({ navigation }) {
       <Header name={name} />
       <FlatList data={products} renderItem={(itemData) => {
         return <MyProducts
+        addToCart={addToCart}
+          id={itemData.item.id}
           product={HeadPhone}
           title={itemData.item.name}
           description={itemData.item.description}

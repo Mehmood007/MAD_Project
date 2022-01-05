@@ -15,10 +15,13 @@ const ProductsStack = createNativeStackNavigator()
 const RootStack = createNativeStackNavigator();
 
 const ProductStackNavigator = () => {
-    return <ProductsStack.Navigator screenOptions={{ headerShown: false }}>
-        <ProductsStack.Screen name="HomeScreen" component={HomeScreen} />
-        <ProductsStack.Screen name="DetailScreen" component={DetailsScreen} />
-    </ProductsStack.Navigator>
+    return (
+        <ProductsStack.Navigator screenOptions={{ headerShown: false }}>
+            <ProductsStack.Screen name="HomeScreen" component={HomeScreen} />
+            <ProductsStack.Screen name="DetailScreen" component={DetailsScreen} />
+        </ProductsStack.Navigator>
+    );
+    
 }
 
 function MyDrawer() {
