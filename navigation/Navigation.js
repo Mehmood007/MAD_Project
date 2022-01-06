@@ -1,5 +1,6 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from "../components/screens/HomeScreen";
@@ -34,7 +35,7 @@ function MyDrawer() {
                             await AsyncStorage.removeItem('userData')
                             navigation.replace("LoginScreen")
                         }}>
-                            <Text>LogOut</Text>
+                            <Icon name="logout" size={28} />
                         </Pressable>
                     }
                 }
