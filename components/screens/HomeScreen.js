@@ -81,13 +81,7 @@ const MyProducts = (prop, { navigation }) => {
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 50 }}>
               $ {prop.price}
             </Text>
-            <TouchableOpacity onPress={() => {
-              prop.addToCart.bind(this, { id: prop.id, title: prop.title, price: prop.price, quantity: 1 })
-            }}>
-              <View style={style.addToCartBtn}>
-                <Icon name="add-shopping-cart" size={20} color={COLORS.white} />
-              </View>
-            </TouchableOpacity>
+            
           </View>
         </View>
       </TouchableOpacity>
