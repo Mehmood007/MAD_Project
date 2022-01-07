@@ -47,7 +47,7 @@ function CartScreen() {
   return (
     <View>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <Text >
+        <Text style={{fontSize: 20}}>
           $ {totalPrice}
         </Text>
       </View>
