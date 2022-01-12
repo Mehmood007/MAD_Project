@@ -8,6 +8,7 @@ import LoginApp from "../components/screens/Login";
 import CartScreen from '../components/screens/CartScreen'
 import Signup from "../components/screens/SignUp";
 import DetailsScreen from "../components/screens/DetailScreen";
+import LocationScreen from "../components/screens/LocationScreen";
 import { Pressable, Text } from 'react-native'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -41,6 +42,7 @@ function MyDrawer() {
                 }
             }} />
             <Drawer.Screen name="CartScreen" component={CartScreen} />
+            <Drawer.Screen name="LocationScreen" component={LocationScreen}/>
         </Drawer.Navigator>
     );
 }
